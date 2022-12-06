@@ -183,7 +183,7 @@ take_after_overwrite_and_init(Config) ->
 validate_sequential_fold(Config) ->
     ra_counters:new(?FUNCTION_NAME, ?RA_COUNTER_FIELDS),
     Log0 = ra_log_init(Config, #{counter => ra_counters:fetch(?FUNCTION_NAME),
-                                 max_open_segments => 100}),
+                                 max_open_segments => 2}),
     % write 1000 entries
     Log1 = append_and_roll(1, 500, 1, Log0),
     Log2 = append_n(500, 999, 1, Log1),
@@ -199,16 +199,18 @@ validate_sequential_fold(Config) ->
                          {_, Reds} = erlang:statistics(exact_reductions),
                          {Reds - Reds0, L}
                  end),
-    ra_log:close(FinLog),
     ct:pal("validate_sequential_fold COLD took ~pms Reductions: ~p~nMetrics: ",
            [ColdTaken/1000, ColdReds]),
 
     #{?FUNCTION_NAME := #{read_cache := M1,
                           read_open_mem_tbl := M2,
                           read_closed_mem_tbl := M3,
+                          open_segments := 2, %% as this is the max
                           read_segment := M4} = O} = ra_counters:overview(),
     ct:pal("counters ~p", [O]),
     ?assertEqual(1000, M1 + M2 + M3 + M4),
+
+    ra_log:close(FinLog),
     ok.
 
 validate_reads_for_overlapped_writes(Config) ->

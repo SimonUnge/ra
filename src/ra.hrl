@@ -226,6 +226,7 @@
           "Total number of snapshots installed"},
          {snapshot_bytes_written, ?C_RA_LOG_SNAPSHOT_BYTES_WRITTEN, counter,
           "Number of snapshot bytes written (not installed)"},
+         {open_segments, ?C_RA_LOG_OPEN_SEGMENTS, gauge, "Number of open segments"},
          {reserved_1, ?C_RA_LOG_RESERVED, counter, "Reserved counter"}
          ]).
 -define(C_RA_LOG_WRITE_OPS, 1).
@@ -239,7 +240,8 @@
 -define(C_RA_LOG_SNAPSHOTS_WRITTEN, 9).
 -define(C_RA_LOG_SNAPSHOTS_INSTALLED, 10).
 -define(C_RA_LOG_SNAPSHOT_BYTES_WRITTEN, 11).
--define(C_RA_LOG_RESERVED, 12).
+-define(C_RA_LOG_OPEN_SEGMENTS, 12).
+-define(C_RA_LOG_RESERVED, 13).
 
 -define(C_RA_SRV_AER_RECEIVED_FOLLOWER, ?C_RA_LOG_RESERVED + 1).
 -define(C_RA_SRV_AER_REPLIES_SUCCESS, ?C_RA_LOG_RESERVED + 2).

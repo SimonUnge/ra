@@ -51,7 +51,7 @@
 
 -record(?MODULE,
         {uid :: ra_uid(),
-         counter :: undefined | counters:counter(),
+         counter :: undefined | counters:counters_ref(),
          module :: module(),
          %% the snapshot directory
          %% typically <data_dir>/snapshots
@@ -137,7 +137,7 @@ init(UId, Mod, File) ->
     init(UId, Mod, File, undefined).
 
 -spec init(ra_uid(), module(), file:filename(),
-           undefined | counters:counter()) ->
+           undefined | counters:counters_ref()) ->
     state().
 init(UId, Module, SnapshotsDir, Counter) ->
     State = #?MODULE{uid = UId,
