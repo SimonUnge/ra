@@ -654,7 +654,6 @@ maybe_pre_allocate(Conf, _Fd, _Max) ->
 close_file(undefined) ->
     ok;
 close_file(Fd) ->
-    % ok = file:sync(Fd),
     file:close(Fd).
 
 close_open_mem_tables(MemTables,
