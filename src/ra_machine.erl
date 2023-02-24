@@ -71,6 +71,7 @@
 -export([init/2,
          apply/4,
          tick/3,
+         tick2/6,
          state_enter/3,
          overview/2,
          query/3,
@@ -276,6 +277,9 @@ apply(Mod, Metadata, Cmd, State) ->
 -spec tick(module(), milliseconds(), state()) -> effects().
 tick(Mod, TimeMs, State) ->
     ?OPT_CALL(Mod:tick(TimeMs, State), []).
+
+tick2(Mod, Leader, Cluster, State, Node, Status) ->
+    ?OPT_CALL(Mod:tick2(Leader, Cluster, State, Node, Status), []).
 
 %% @doc called when the ra_server_proc enters a new state
 -spec state_enter(module(), ra_server:ra_state() | eol, state()) ->
