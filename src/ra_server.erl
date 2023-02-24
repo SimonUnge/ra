@@ -27,7 +27,7 @@
          handle_aux/4,
          handle_state_enter/2,
          tick/1,
-         tick2/3,
+         cluster_update/3,
          overview/1,
          metrics/1,
          is_new/1,
@@ -1334,12 +1334,12 @@ tick(#{cfg := #cfg{effective_machine_module = MacMod},
     Now = erlang:system_time(millisecond),
     ra_machine:tick(MacMod, Now, MacState).
 
-tick2(#{cfg := #cfg{effective_machine_module = MacMod},
+cluster_update(#{cfg := #cfg{effective_machine_module = MacMod},
         machine_state := MacState,
         cluster := Cluster,
         leader_id := Leader
        }, Node, Status) ->
-    ra_machine:tick2(MacMod, Leader, maps:keys(Cluster), MacState, Node, Status).
+    ra_machine:cluster_update(MacMod, Leader, maps:keys(Cluster), MacState, Node, Status).
 
 -spec handle_state_enter(ra_state() | eol, ra_server_state()) ->
     {ra_server_state() | eol, effects()}.

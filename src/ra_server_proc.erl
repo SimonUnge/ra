@@ -489,7 +489,7 @@ leader(info, {update_peer, PeerId, Update}, State0) ->
     State = update_peer(PeerId, Update, State0),
     {keep_state, State, []};
 leader(info, {delayed_inform_member, Node, Status}, State0) ->
-    Effects = ra_server:tick2(State0#state.server_state, Node, Status),
+    Effects = ra_server:cluster_update(State0#state.server_state, Node, Status),
     {State, Actions} = ?HANDLE_EFFECTS(Effects,
                                         cast, State0),
     {keep_state, State, Actions};

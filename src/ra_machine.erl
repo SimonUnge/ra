@@ -71,7 +71,7 @@
 -export([init/2,
          apply/4,
          tick/3,
-         tick2/6,
+         cluster_update/6,
          state_enter/3,
          overview/2,
          query/3,
@@ -201,6 +201,7 @@
               command_meta_data/0]).
 
 -optional_callbacks([tick/2,
+
                      state_enter/2,
                      init_aux/1,
                      handle_aux/6,
@@ -230,6 +231,8 @@
 -callback state_enter(ra_server:ra_state() | eol, state()) -> effects().
 
 -callback tick(TimeMs :: milliseconds(), state()) -> effects().
+
+-callback cluster_update(any(), any(), any(), any(), any()) -> effects().
 
 -callback init_aux(Name :: atom()) -> term().
 
@@ -278,8 +281,8 @@ apply(Mod, Metadata, Cmd, State) ->
 tick(Mod, TimeMs, State) ->
     ?OPT_CALL(Mod:tick(TimeMs, State), []).
 
-tick2(Mod, Leader, Cluster, State, Node, Status) ->
-    ?OPT_CALL(Mod:tick2(Leader, Cluster, State, Node, Status), []).
+cluster_update(Mod, Leader, Cluster, State, Node, Status) ->
+    ?OPT_CALL(Mod:cluster_update(Leader, Cluster, State, Node, Status), []).
 
 %% @doc called when the ra_server_proc enters a new state
 -spec state_enter(module(), ra_server:ra_state() | eol, state()) ->
