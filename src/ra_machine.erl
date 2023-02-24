@@ -201,7 +201,7 @@
               command_meta_data/0]).
 
 -optional_callbacks([tick/2,
-
+                     cluster_update/5,
                      state_enter/2,
                      init_aux/1,
                      handle_aux/6,
