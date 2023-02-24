@@ -483,7 +483,7 @@ leader(info, {'DOWN', _MRef, process, Pid, Info}, State0) ->
     handle_process_down(Pid, Info, ?FUNCTION_NAME, State0);
 leader(info, {Status, Node, InfoList}, State0)
   when Status =:= nodedown orelse Status =:= nodeup ->
-    erlang:send_after(rand:uniform(10) * 1000, self(), {delayed_inform_member, Node, Status}),
+    erlang:send_after(rand:uniform(9000) + 1000, self(), {delayed_inform_member, Node, Status}),
     handle_node_status_change(Node, Status, InfoList, ?FUNCTION_NAME, State0);
 leader(info, {update_peer, PeerId, Update}, State0) ->
     State = update_peer(PeerId, Update, State0),
